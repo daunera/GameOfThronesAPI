@@ -8,6 +8,7 @@ namespace GameOfThronesAPI.Views
         public MainPage()
         {
             InitializeComponent();
+            Windows.ApplicationModel.Core.CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
             NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
         }
 

@@ -1,5 +1,18 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Template10.Controls">
 
-    <!--  custom styles here  -->
+    <Style TargetType="TextBlock" x:Key="PrimaryText">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Margin" Value="0,2,0,2"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="SecondaryText">
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Margin" Value="4,2,10,2"/>
+        <Setter Property="Foreground" Value="Gray"/>
+    </Style>
 
 </ResourceDictionary>

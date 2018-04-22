@@ -1,0 +1,49 @@
+﻿<Page
+    x:Class="GameOfThronesAPI.Views.Shell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:views="using:GameOfThronesAPI.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Template10.Controls"
+    mc:Ignorable="d">
+
+    <controls:HamburgerMenu x:Name="Menu"
+                HamburgerBackground="#1f4ec4"
+                HamburgerForeground="White"
+                NavAreaBackground="#DD1E1E1E"
+                NavButtonBackground="#AA1f4ec4"
+                NavButtonForeground="White" >
+
+        <controls:HamburgerMenu.PrimaryButtons>
+            <controls:HamburgerButtonInfo PageType="views:MainPage" ClearHistory="True">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <SymbolIcon Symbol="Home" Width="48" Height="48"/>
+                    <TextBlock Text="Main Page" Margin="12, 0, 0, 0" VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:HamburgerButtonInfo>
+
+            <controls:HamburgerButtonInfo PageType="views:BooksPage" PageParameter="https://www.anapioficeandfire.com/api/books" ClearHistory="True">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <SymbolIcon Symbol="Library" Width="48" Height="48"/>
+                    <TextBlock Text="Books" Margin="12, 0, 0, 0" VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:HamburgerButtonInfo>
+
+            <controls:HamburgerButtonInfo PageType="views:CharactersPage" PageParameter="https://www.anapioficeandfire.com/api/characters?page%3D2%26pageSize%3D50" ClearHistory="True">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <SymbolIcon Symbol="People" Width="48" Height="48"/>
+                    <TextBlock Text="Characters" Margin="12, 0, 0, 0" VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:HamburgerButtonInfo>
+
+            <controls:HamburgerButtonInfo PageType="views:HousesPage" PageParameter="https://www.anapioficeandfire.com/api/houses?page%3D1%26pageSize%3D50" ClearHistory="True">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <SymbolIcon Symbol="Flag" Width="48" Height="48"/>
+                    <TextBlock Text="Houses" Margin="12, 0, 0, 0" VerticalAlignment="Center" />
+                </StackPanel>
+            </controls:HamburgerButtonInfo>
+        </controls:HamburgerMenu.PrimaryButtons>
+
+    </controls:HamburgerMenu>
+</Page>

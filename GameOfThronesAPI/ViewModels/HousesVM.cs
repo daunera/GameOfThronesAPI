@@ -20,8 +20,9 @@ namespace GameOfThronesAPI.ViewModels
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
+            String link = ((String)parameter).Replace("%3D", "=").Replace("%26", "&");
             var service = new ThroneService();
-            var obj = await service.GetHousesAsync((String)parameter);
+            var obj = await service.GetHousesAsync(link);
             List<House> houses = (List<House>) obj[0];
             foreach (House item in houses)
             {

@@ -28,7 +28,7 @@ namespace GameOfThronesAPI.ViewModels
 
         public void NavigateToCharacters()
         {
-            NavigationService.Navigate(typeof(CharactersPage), "https://www.anapioficeandfire.com/api/characters?page=1&pageSize=50");
+            NavigationService.Navigate(typeof(CharactersPage), "https://www.anapioficeandfire.com/api/characters?page=2&pageSize=50");
         }
 
         public void NavigateToBooks()

@@ -34,7 +34,7 @@
         <TextBlock Grid.ColumnSpan="3" Grid.Row="0" Text="Game Of Thrones" Margin="0,30,0,0"  FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Button x:Name="BooksButton" Grid.Column="0" Grid.Row="1" Margin="30,30,15,30" Style="{StaticResource MenuButton}" Click="BooksButton_Click">
             <StackPanel>
-                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="80" Glyph="&#xE82D;"/>
+                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="80" Glyph="&#xE8F1;"/>
                 <TextBlock Text="Books" FontSize="34"/>
             </StackPanel>
         </Button>
@@ -46,7 +46,7 @@
         </Button>
         <Button x:Name="HousesButton" Grid.Column="2" Grid.Row="1" Margin="15,30,30,30" Style="{StaticResource MenuButton}" Click="HousesButton_Click">
             <StackPanel>
-                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="80" Glyph="&#xE80F;"/>
+                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="80" Glyph="&#xE7C1;"/>
                 <TextBlock Text="Houses" FontSize="34"/>
             </StackPanel>
         </Button>

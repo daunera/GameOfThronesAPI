@@ -12,27 +12,14 @@
         <vm:BookDetailsVM x:Name="BookDetailViewModel"/>
     </Page.DataContext>
 
-    <Page.Resources>
-        <Style TargetType="TextBlock" x:Key="SecondaryText">
-            <Setter Property="Foreground" Value="Gray"/>
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="Margin" Value="4,2,10,2"/>
-
-        </Style>
-        <Style TargetType="TextBlock" x:Key="PrimaryText">
-            <Setter Property="FontSize" Value="18"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-        </Style>
-    </Page.Resources>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#232323" Padding="10,10,0,10" >
-            <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="32" Glyph="&#xE82D;"/>
-            <TextBlock Text="{Binding Book.Name}" FontSize="32" TextWrapping="WrapWholeWords" Margin="10,0,0,0"/>
+            <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="28" Glyph="&#xE82D;"/>
+            <TextBlock Text="{Binding Book.Name}" FontSize="20" TextWrapping="WrapWholeWords" Margin="10,0,0,0"/>
         </StackPanel>
         <ScrollViewer Grid.Row="1">
             <Grid Margin="15,10,10,0">

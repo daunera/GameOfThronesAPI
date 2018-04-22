@@ -20,8 +20,9 @@ namespace GameOfThronesAPI.ViewModels
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
+            String link = ((String)parameter).Replace("%3D", "=").Replace("%26", "&");
             var service = new ThroneService();
-            var obj = await service.GetCharactersAsync((String)parameter);
+            var obj = await service.GetCharactersAsync(link);
             List<Character> characters = (List<Character>)obj[0];
             foreach (Character item in characters)
             {

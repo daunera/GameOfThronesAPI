@@ -23,20 +23,20 @@
         </Grid.Resources>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#232323" Padding="10,10,0,10" >
-            <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="32" Glyph="&#xE716;"/>
-            <TextBlock Text="Characters" FontSize="32" Margin="10,0,30,0"/>
+            <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="28" Glyph="&#xE716;"/>
+            <TextBlock Text="Characters" FontSize="20" Margin="10,0,30,0"/>
 
             <Button x:Name="First" Click="First_Click">
-                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="18" Glyph="&#xE892;"/>
+                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="16" Glyph="&#xE892;"/>
             </Button>
             <Button x:Name="Prev" Click="Prev_Click">
-                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="18" Glyph="&#xE00E;"/>
+                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="16" Glyph="&#xE00E;"/>
             </Button>
             <Button x:Name="Next" Click="Next_Click">
-                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="18" Glyph="&#xE00F;"/>
+                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="16" Glyph="&#xE00F;"/>
             </Button>
             <Button x:Name="Last" Click="Last_Click">
-                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="18" Glyph="&#xE893;"/>
+                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="16" Glyph="&#xE893;"/>
             </Button>
 
         </StackPanel>
