@@ -1,0 +1,116 @@
+﻿<Page
+    x:Class="GameOfThronesAPI.Views.BookDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GameOfThronesAPI.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:vm="using:GameOfThronesAPI.ViewModels">
+
+    <Page.DataContext>
+        <vm:BookDetailsVM x:Name="BookDetailViewModel"/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <Style TargetType="TextBlock" x:Key="SecondaryText">
+            <Setter Property="Foreground" Value="Gray"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="4,2,10,2"/>
+
+        </Style>
+        <Style TargetType="TextBlock" x:Key="PrimaryText">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Background="#232323" Padding="10,10,0,10" >
+            <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="32" Glyph="&#xE82D;"/>
+            <TextBlock Text="{Binding Book.Name}" FontSize="32" TextWrapping="WrapWholeWords" Margin="10,0,0,0"/>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1">
+            <Grid Margin="15,10,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.Resources>
+                    <CollectionViewSource x:Key="PovCharactersViewSource" Source="{Binding PovCharacters}"/>
+                    <CollectionViewSource x:Key="CharactersViewSource" Source="{Binding Characters}"/>
+                </Grid.Resources>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="ISBN:" Style="{ThemeResource SecondaryText}"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Book.Isbn}" Style="{ThemeResource PrimaryText}"/>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Authors:"  Style="{ThemeResource SecondaryText}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Book.AuthorsText}" Style="{ThemeResource PrimaryText}"/>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Number of Pages:"  Style="{ThemeResource SecondaryText}"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Book.NumberOfPages}" Style="{ThemeResource PrimaryText}"/>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Publisher:" Style="{ThemeResource SecondaryText}"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Book.Publisher}" Style="{ThemeResource PrimaryText}"/>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Country:" Style="{ThemeResource SecondaryText}"/>
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Book.Country}" Style="{ThemeResource PrimaryText}"/>
+
+                <TextBlock Grid.Row="5" Grid.Column="0" Text="Media Type:" Style="{ThemeResource SecondaryText}"/>
+                <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding Book.MediaType}"  Style="{ThemeResource PrimaryText}"/>
+
+                <TextBlock Grid.Row="6" Grid.Column="0" Text="Released:" Style="{ThemeResource SecondaryText}"/>
+                <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding Book.ReleasedFormatted}"  Style="{ThemeResource PrimaryText}"/>
+
+                <TextBlock Grid.Row="7" Grid.Column="0" Text="PoV Characters:" Style="{ThemeResource SecondaryText}"/>
+                <ScrollViewer Grid.Row="8" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ListView x:Name="povCharactersListView"
+                        ItemsSource="{Binding Source={StaticResource PovCharactersViewSource}}" 
+                        IsItemClickEnabled="True"
+                        ItemClick="Character_OnClick">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" FontSize="18"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+
+                <TextBlock Grid.Row="9" Grid.Column="0" Text="Characters:" Style="{ThemeResource SecondaryText}"/>
+                <ListView  Grid.Row="10" Grid.ColumnSpan="2" x:Name="charactersListView"
+                    ItemsSource="{Binding Source={StaticResource CharactersViewSource}}" 
+                    IsItemClickEnabled="True"
+                    ItemClick="Character_OnClick">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" FontSize="18"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>
