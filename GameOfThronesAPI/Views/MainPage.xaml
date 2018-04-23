@@ -7,7 +7,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:GameOfThronesAPI.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:GameOfThronesAPI.ViewModels" mc:Ignorable="d">
+      xmlns:vm="using:GameOfThronesAPI.ViewModels" mc:Ignorable="d"
+      xmlns:got="using:GameOfThronesAPI">
 
     <Page.DataContext>
         <vm:MainVM x:Name="MainViewModel"/>
@@ -30,6 +31,7 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.ColumnSpan="3" Grid.Row="0" Text="Game Of Thrones" Margin="0,30,0,0"  FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Button x:Name="BooksButton" Grid.Column="0" Grid.Row="1" Margin="30,30,15,30" Style="{StaticResource MenuButton}" Click="BooksButton_Click">
@@ -50,7 +52,16 @@
                 <TextBlock Text="Houses" FontSize="34"/>
             </StackPanel>
         </Button>
-        <TextBlock Grid.ColumnSpan="3" Grid.Row="3" Text="Created by Hodor and only Hodor" Margin="0,0,30,0" FontSize="16" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Grid.ColumnSpan="3" Grid.Row="2" Margin="0,30,0,0" FontSize="16" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Run Text="Since the app start"/>
+            <Run Text="{Binding ApiCallNums}"/>
+            <Run Text="API calls were shot, but no one died!"/>
+        </TextBlock>
+        <TextBlock Grid.ColumnSpan="3" Grid.Row="3" Margin="0,0,0,0" FontSize="10" Foreground="Gray" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Run Text="©2018 Hodor, hodor! | Credits for"/>
+            <Hyperlink NavigateUri="https://www.anapioficeandfire.com/" Foreground="Gray">anapioficeandfire.com</Hyperlink>
+        </TextBlock>
+            
     </Grid>
 
 </Page>

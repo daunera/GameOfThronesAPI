@@ -20,6 +20,7 @@ namespace GameOfThronesAPI.Services
                 var json = await response.Content.ReadAsStringAsync();
                 T result = JsonConvert.DeserializeObject<T>(json);
                 Object[] array = new Object[] { result, links };
+                App.ApiCalls++;
                 return array;
             }
         }
@@ -48,6 +49,7 @@ namespace GameOfThronesAPI.Services
                 var response = await client.GetAsync(uri);
                 var json = await response.Content.ReadAsStringAsync();
                 T result = JsonConvert.DeserializeObject<T>(json);
+                App.ApiCalls++;
                 return result;
             }
         }

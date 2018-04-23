@@ -9,15 +9,23 @@ using System.Collections.ObjectModel;
 using GameOfThronesAPI.Models;
 using GameOfThronesAPI.Services;
 using GameOfThronesAPI.Views;
+using System.ComponentModel;
 
 namespace GameOfThronesAPI.ViewModels
 {
     public class MainVM : ViewModelBase
     {
 
+        private int _appiCallNums;
+        public int ApiCallNums
+        {
+            get { return _appiCallNums; }
+            set { Set(ref _appiCallNums, value); }
+        }
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
+            ApiCallNums = App.ApiCalls;
             await base.OnNavigatedToAsync(parameter, mode, state);
         }
 

@@ -12,10 +12,19 @@ namespace GameOfThronesAPI
     [Bindable]
     sealed partial class App : Template10.Common.BootStrapper
     {
+        private static int apiCalls;
+
+        public static int ApiCalls
+        {
+            get { return apiCalls; }
+            set { apiCalls = value; }
+        }
+
         public App()
         {
             InitializeComponent();
             RequestedTheme = Windows.UI.Xaml.ApplicationTheme.Dark;
+            ApiCalls = 0;
         }
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
