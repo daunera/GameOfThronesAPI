@@ -21,14 +21,13 @@
                 <Setter Property="ButtonInactiveForegroundColor" Value="White" />
                 <Setter Property="ButtonPressedBackgroundColor" Value="DarkOrange" />
                 <Setter Property="ButtonPressedForegroundColor" Value="White" />
-                <!--Setter Property="Extended" Value="False" /-->
                 <Setter Property="ForegroundColor" Value="White" />
                 <Setter Property="InactiveBackgroundColor" Value="DimGray" />
                 <Setter Property="InactiveForegroundColor" Value="#232323" />
             </Style>
 
         </ResourceDictionary>
+        
     </Application.Resources>
-
 
 </common:BootStrapper>

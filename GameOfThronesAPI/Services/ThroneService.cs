@@ -1,27 +1,66 @@
-﻿using GameOfThronesAPI.Models;
+﻿using GameOfThronesAPI.Exceptions;
+using GameOfThronesAPI.Models;
+using GameOfThronesAPI.Views;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Template10.Services.NavigationService;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace GameOfThronesAPI.Services
 {
-    class ThroneService
+    class ThroneService 
     {
         private async Task<Object[]> GetPagedAsync<T>(Uri uri)
         {
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync(uri);
-                Linker links = LinksTransform(((String[]) response.Headers.GetValues("link"))[0]);
-                var json = await response.Content.ReadAsStringAsync();
-                T result = JsonConvert.DeserializeObject<T>(json);
-                Object[] array = new Object[] { result, links };
-                App.ApiCalls++;
-                return array;
+                try
+                {
+                    var response = await client.GetAsync(uri);
+                    Linker links = LinksTransform(((String[])response.Headers.GetValues("link"))[0]);
+                    var json = await response.Content.ReadAsStringAsync();
+                    T result = JsonConvert.DeserializeObject<T>(json);
+
+                    if (((string)json).Equals("[]"))
+                    {
+                        throw new EmptyJsonException();
+                    }
+
+                    Object[] array = new Object[] { result, links };
+                    App.ApiCalls++;
+                    return array;
+                }
+                catch (HttpRequestException e)
+                {
+                    ContentDialog noConnectionDialog = new ContentDialog
+                    {
+                        Title = "No internet connection",
+                        Content = "Check your connection and try again.",
+                        CloseButtonText = "Ok"
+                    };
+
+                    ContentDialogResult result = await noConnectionDialog.ShowAsync();
+                    throw new RedirectMainException();
+                }
+                catch (EmptyJsonException e)
+                {
+                    ContentDialog noItemDialog = new ContentDialog
+                    {
+                        Title = "No result",
+                        Content = "No item found with these filters.",
+                        CloseButtonText = "Ok"
+                    };
+
+                    ContentDialogResult result = await noItemDialog.ShowAsync();
+                    return new Object[] { null, new Linker() };
+                }
             }
         }
 
@@ -46,11 +85,26 @@ namespace GameOfThronesAPI.Services
 
             using (var client = new HttpClient())
             {
-                var response = await client.GetAsync(uri);
-                var json = await response.Content.ReadAsStringAsync();
-                T result = JsonConvert.DeserializeObject<T>(json);
-                App.ApiCalls++;
-                return result;
+                try
+                {
+                    var response = await client.GetAsync(uri);
+                    var json = await response.Content.ReadAsStringAsync();
+                    T result = JsonConvert.DeserializeObject<T>(json);
+                    App.ApiCalls++;
+                    return result;
+                }
+                catch (HttpRequestException e)
+                {
+                    ContentDialog noConnectionDialog = new ContentDialog
+                    {
+                        Title = "No internet connection",
+                        Content = "Check your connection and try again.",
+                        CloseButtonText = "Ok"
+                    };
+
+                    ContentDialogResult result = await noConnectionDialog.ShowAsync();
+                    throw new RedirectMainException();
+                }
             }
         }
 
@@ -91,6 +145,13 @@ namespace GameOfThronesAPI.Services
                 else if (tmp[1].Equals("rel=\"last\""))
                     linker.Last = tmp[0].Substring(1, tmp[0].Length - 2);
             }
+
+            if (linker.First.Equals(linker.Last))
+            {
+                linker.First = null;
+                linker.Last = null;
+            }
+
             return linker;
         }
     }

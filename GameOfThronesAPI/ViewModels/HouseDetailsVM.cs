@@ -1,4 +1,5 @@
-﻿using GameOfThronesAPI.Models;
+﻿using GameOfThronesAPI.Exceptions;
+using GameOfThronesAPI.Models;
 using GameOfThronesAPI.Services;
 using GameOfThronesAPI.Views;
 using System;
@@ -59,40 +60,48 @@ namespace GameOfThronesAPI.ViewModels
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            var houseUrl = (String)parameter;
-            var service = new ThroneService();
-            House = await service.GetHouseAsync(houseUrl);
-            CurrentLord = await service.GetCharacterAsync(House.CurrentLord);
-            Heir = await service.GetCharacterAsync(House.Heir);
-            Overlord = await service.GetHouseAsync(House.Overlord);
-            Founder = await service.GetCharacterAsync(House.Founder);
-
-            if (House.CadetBranches.Length != 0)
+            try
             {
-                Cadets.Clear();
-                foreach (String url in House.CadetBranches)
-                {
-                    House newHouse = await service.GetHouseAsync(url);
-                    Cadets.Add(newHouse);
-                }
-            }
+                var houseUrl = (String)parameter;
+                var service = new ThroneService();
+                House = await service.GetHouseAsync(houseUrl);
+                CurrentLord = await service.GetCharacterAsync(House.CurrentLord);
+                Heir = await service.GetCharacterAsync(House.Heir);
+                Overlord = await service.GetHouseAsync(House.Overlord);
+                Founder = await service.GetCharacterAsync(House.Founder);
 
-            if (House.SwornMembers.Length != 0)
+                if (House.CadetBranches.Length != 0)
+                {
+                    Cadets.Clear();
+                    foreach (String url in House.CadetBranches)
+                    {
+                        House newHouse = await service.GetHouseAsync(url);
+                        Cadets.Add(newHouse);
+                    }
+                }
+
+                if (House.SwornMembers.Length != 0)
+                {
+                    Sworns.Clear();
+                    foreach (String url in House.SwornMembers)
+                    {
+                        Character newGuy = await service.GetCharacterAsync(url);
+                        Sworns.Add(newGuy);
+                    }
+                }
+
+                await base.OnNavigatedToAsync(parameter, mode, state);
+            }
+            catch(RedirectMainException e)
             {
-                Sworns.Clear();
-                foreach (String url in House.SwornMembers)
-                {
-                    Character newGuy = await service.GetCharacterAsync(url);
-                    Sworns.Add(newGuy);
-                }
+                NavigationService.Navigate(typeof(MainPage));
             }
-
-            await base.OnNavigatedToAsync(parameter, mode, state);
         }
 
         public void NavigateToHouseDetails(String houseURL)
         {
             NavigationService.Navigate(typeof(HouseDetailsPage), houseURL);
+
         }
 
         public void NavigateToCharacterDetails(String characterURL)

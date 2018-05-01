@@ -37,7 +37,72 @@
             <Button x:Name="Last" Click="Last_Click">
                 <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="16" Glyph="&#xE893;"/>
             </Button>
-            
+
+            <Button x:Name="Filter" Tapped="Filter_Tapped" Margin="15,0,0,0">
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem x:Name="AMenuFlyoutTry">
+                            <MenuFlyoutItem.Template >
+                                <ControlTemplate TargetType="MenuFlyoutItem" x:Name="ATry2">
+                                    <Grid Margin="5,0,5,0" x:Name="ATry3">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Words:" VerticalAlignment="Center" Margin="0,0,5,5"/>
+                                        <ComboBox x:Name="WordsCombo" Grid.Row="0" Grid.Column="1" Width="110" Margin="0,0,0,5">
+                                            <ComboBoxItem Content="Has"/>
+                                            <ComboBoxItem Content="Whatever" IsSelected="True"/>
+                                            <ComboBoxItem Content="Hasn't"/>
+                                        </ComboBox>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Titles:" VerticalAlignment="Center" Margin="0,0,5,5"/>
+                                        <ComboBox x:Name="TitlesCombo"  Grid.Row="1" Grid.Column="1" Width="110" Margin="0,0,0,5">
+                                            <ComboBoxItem Content="Has"/>
+                                            <ComboBoxItem Content="Whatever" IsSelected="True"/>
+                                            <ComboBoxItem Content="Hasn't"/>
+                                        </ComboBox>
+
+                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Seats:" VerticalAlignment="Center" Margin="0,0,5,5"/>
+                                        <ComboBox x:Name="SeatsCombo"  Grid.Row="2" Grid.Column="1" Width="110" Margin="0,0,0,5">
+                                            <ComboBoxItem Content="Has"/>
+                                            <ComboBoxItem Content="Whatever" IsSelected="True"/>
+                                            <ComboBoxItem Content="Hasn't"/>
+                                        </ComboBox>
+
+                                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Died out:" VerticalAlignment="Center" Margin="0,0,5,5"/>
+                                        <ComboBox Name="DiedOutCombo" Grid.Row="3" Grid.Column="1" Width="110" Margin="0,0,0,5">
+                                            <ComboBoxItem Content="Yes"/>
+                                            <ComboBoxItem Content="Whatever" IsSelected="True"/>
+                                            <ComboBoxItem Content="Not yet"/>
+                                        </ComboBox>
+
+                                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Weapons:" VerticalAlignment="Center" Margin="0,0,5,5"/>
+                                        <ComboBox Name="WeaponsCombo" Grid.Row="4" Grid.Column="1" Width="110" Margin="0,0,0,5">
+                                            <ComboBoxItem Content="Has"/>
+                                            <ComboBoxItem Content="Whatever" IsSelected="True"/>
+                                            <ComboBoxItem Content="Hasn't"/>
+                                        </ComboBox>
+
+                                        <Button Grid.Row="5" Grid.ColumnSpan="2" Click="Filter_Click" HorizontalAlignment="Stretch" Content="Filter it"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </MenuFlyoutItem.Template>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="16" Glyph="&#xE011;"/>
+            </Button>
+
         </StackPanel>
         <ListView x:Name="housesListView" Grid.Row="1"
                   ItemsSource="{Binding Source={StaticResource HousesViewSource}}" 

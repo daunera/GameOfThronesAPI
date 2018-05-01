@@ -1,4 +1,5 @@
-﻿using GameOfThronesAPI.Models;
+﻿using GameOfThronesAPI.Exceptions;
+using GameOfThronesAPI.Models;
 using GameOfThronesAPI.Services;
 using GameOfThronesAPI.Views;
 using System;
@@ -21,16 +22,7 @@ namespace GameOfThronesAPI.ViewModels
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             String link = ((String)parameter).Replace("%3D", "=").Replace("%26", "&");
-            var service = new ThroneService();
-            var obj = await service.GetHousesAsync(link);
-            List<House> houses = (List<House>) obj[0];
-            foreach (House item in houses)
-            {
-                Houses.Add(item);
-            }
-
-            Buttons = (Linker)obj[1];
-
+            SetHousesList(link);
             await base.OnNavigatedToAsync(parameter, mode, state);
         }
 
@@ -39,18 +31,101 @@ namespace GameOfThronesAPI.ViewModels
             NavigationService.Navigate(typeof(HouseDetailsPage),houseURL);
         }
 
-        public async void LoadPage(String parameter)
+        public void LoadPage(String parameter)
         {
-            var service = new ThroneService();
-            var obj = await service.GetHousesAsync(parameter);
-            List<House> houses = (List<House>)obj[0];
             Houses.Clear();
-            foreach (House item in houses)
+            SetHousesList(parameter);
+        }
+
+        public void LoadFilteredPage(int words, int titles, int seats, int died, int weapons)
+        {
+            String baseUrl = "https://www.anapioficeandfire.com/api/houses?";
+
+            switch (words)
             {
-                Houses.Add(item);
+                case 0:
+                    baseUrl += "hasWords=true&";
+                    break;
+                case 2:
+                    baseUrl += "hasWords=false&";
+                    break;
+                default:
+                    break;
             }
 
-            Buttons = (Linker)obj[1];
+            switch (titles)
+            {
+                case 0:
+                    baseUrl += "hasTitles=true&";
+                    break;
+                case 2:
+                    baseUrl += "hasTitles=false&";
+                    break;
+                default:
+                    break;
+            }
+
+            switch (seats)
+            {
+                case 0:
+                    baseUrl += "hasSeats=true&";
+                    break;
+                case 2:
+                    baseUrl += "hasSeats=false&";
+                    break;
+                default:
+                    break;
+            }
+
+            switch (died)
+            {
+                case 0:
+                    baseUrl += "hasDiedOut=true&";
+                    break;
+                case 2:
+                    baseUrl += "hasDiedOut=false&";
+                    break;
+                default:
+                    break;
+            }
+
+            switch (weapons)
+            {
+                case 0:
+                    baseUrl += "hasAncestralWeapons=true&";
+                    break;
+                case 2:
+                    baseUrl += "hasAncestralWeapons=false&";
+                    break;
+                default:
+                    break;
+            }
+
+            LoadPage(baseUrl);
+        }
+
+        private async void SetHousesList(String url)
+        {
+            try
+            {
+                var service = new ThroneService();
+                var obj = await service.GetHousesAsync(url);
+                if (obj[0] != null)
+                {
+                    List<House> houses = (List<House>)obj[0];
+                    foreach (House item in houses)
+                    {
+                        Houses.Add(item);
+                    }
+                }
+
+                Buttons = (Linker)obj[1];
+            }
+            catch (RedirectMainException e)
+            {
+                NavigationService.Navigate(typeof(MainPage));
+            }
+
         }
     }
 }
