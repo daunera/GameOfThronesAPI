@@ -58,6 +58,14 @@ namespace GameOfThronesAPI.ViewModels
         public ObservableCollection<House> Cadets { get; set; } = new ObservableCollection<House>();
         public ObservableCollection<Character> Sworns { get; set; } = new ObservableCollection<Character>();
 
+
+        /// <summary>
+        /// When navigated to this page, get the given house details
+        /// </summary>
+        /// <param name="parameter">url</param>
+        /// <param name="mode"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             try
@@ -98,12 +106,20 @@ namespace GameOfThronesAPI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Navigate to another house details page
+        /// </summary>
+        /// <param name="houseURL">other house's url</param>
         public void NavigateToHouseDetails(String houseURL)
         {
             NavigationService.Navigate(typeof(HouseDetailsPage), houseURL);
 
         }
 
+        /// <summary>
+        /// Navigate to another character details pge
+        /// </summary>
+        /// <param name="characterURL">character's url</param>
         public void NavigateToCharacterDetails(String characterURL)
         {
             NavigationService.Navigate(typeof(CharacterDetailsPage), characterURL);

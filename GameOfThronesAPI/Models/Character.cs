@@ -22,6 +22,10 @@ namespace GameOfThronesAPI.Models
         public string[] TvSeries { get; set; }
         public string[] PlayedBy { get; set; }
 
+
+        /// <summary>
+        /// These properties return with a string which created from a string array
+        /// </summary>
         public string TitleText { get { return FrozenUtils.GetArrayInString(Titles); } }
         public string AliasText { get { return FrozenUtils.GetArrayInString(Aliases); } }
         public string TvSeriesText { get { return FrozenUtils.GetArrayInString(TvSeries); } }

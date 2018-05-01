@@ -1,5 +1,8 @@
 ﻿namespace GameOfThronesAPI.Models
 {
+    /// <summary>
+    /// Through linker class we can manage the api page stepping 
+    /// </summary>
     public class Linker
     {
         public string Next { get; set; }

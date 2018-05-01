@@ -19,6 +19,13 @@ namespace GameOfThronesAPI.ViewModels
 
         public Linker Buttons { get; set; } = new Linker();
 
+        /// <summary>
+        /// When navigate to this page, start a request for the houses list
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="mode"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             String link = ((String)parameter).Replace("%3D", "=").Replace("%26", "&");
@@ -26,17 +33,34 @@ namespace GameOfThronesAPI.ViewModels
             await base.OnNavigatedToAsync(parameter, mode, state);
         }
 
+
+        /// <summary>
+        /// Navigate to a house's details page
+        /// </summary>
+        /// <param name="houseURL">house's url</param>
         public void NavigateToHouseDetails(String houseURL)
         {
             NavigationService.Navigate(typeof(HouseDetailsPage),houseURL);
         }
 
+        /// <summary>
+        /// Refresh the list property
+        /// </summary>
+        /// <param name="parameter"></param>
         public void LoadPage(String parameter)
         {
             Houses.Clear();
             SetHousesList(parameter);
         }
 
+        /// <summary>
+        /// Create the filtered url for request based on the given parameters
+        /// </summary>
+        /// <param name="words"></param>
+        /// <param name="titles"></param>
+        /// <param name="seats"></param>
+        /// <param name="died"></param>
+        /// <param name="weapons"></param>
         public void LoadFilteredPage(int words, int titles, int seats, int died, int weapons)
         {
             String baseUrl = "https://www.anapioficeandfire.com/api/houses?";
@@ -104,6 +128,11 @@ namespace GameOfThronesAPI.ViewModels
             LoadPage(baseUrl + "pageSize=50");
         }
 
+
+        /// <summary>
+        /// Set the list with houses from the response
+        /// </summary>
+        /// <param name="url"></param>
         private async void SetHousesList(String url)
         {
             try

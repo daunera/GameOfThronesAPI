@@ -8,6 +8,11 @@ namespace GameOfThronesAPI.Services
 {
     public class FrozenUtils
     {
+        /// <summary>
+        /// Make a string with ',' separator from a string array
+        /// </summary>
+        /// <param name="array"></param>
+        /// <returns></returns>
         public static string GetArrayInString(string[] array)
         {
             string title = "";

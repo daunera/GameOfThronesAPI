@@ -23,22 +23,38 @@ namespace GameOfThronesAPI.ViewModels
             set { Set(ref _appiCallNums, value); }
         }
 
+        /// <summary>
+        /// When navigate to main page, update the api calls counter
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="mode"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             ApiCallNums = App.ApiCalls;
             await base.OnNavigatedToAsync(parameter, mode, state);
         }
 
+        /// <summary>
+        /// Navigate to the houses page
+        /// </summary>
         public void NavigateToHouses()
         {
             NavigationService.Navigate(typeof(HousesPage), "https://www.anapioficeandfire.com/api/houses?page=1&pageSize=50");
         }
 
+        /// <summary>
+        /// Navigate to the characters page
+        /// </summary>
         public void NavigateToCharacters()
         {
             NavigationService.Navigate(typeof(CharactersPage), "https://www.anapioficeandfire.com/api/characters?page=2&pageSize=50");
         }
 
+        /// <summary>
+        /// Navigate to the books page
+        /// </summary>
         public void NavigateToBooks()
         {
             NavigationService.Navigate(typeof(BooksPage), "https://www.anapioficeandfire.com/api/books?page=1&pageSize=50");

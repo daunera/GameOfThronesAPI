@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GameOfThronesAPI.Exceptions
 {
+    /// <summary>
+    /// This exception throwed, when we want to redirect to the main page because of an other exception
+    /// </summary>
     class RedirectMainException : Exception
     {
         public RedirectMainException() { }

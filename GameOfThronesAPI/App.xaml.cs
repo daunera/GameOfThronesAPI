@@ -37,7 +37,6 @@ namespace GameOfThronesAPI
             var nav = NavigationServiceFactory(BackButton.Attach, ExistingContent.Include);
             Window.Current.Content = new Views.Shell((NavigationService)nav);
             return Task.FromResult<object>(null);
-            //return base.OnInitializeAsync(args);
         }
     }
 }

@@ -22,6 +22,9 @@ namespace GameOfThronesAPI.Models
         public object[] CadetBranches { get; set; }
         public object[] SwornMembers { get; set; }
 
+        /// <summary>
+        /// These properties return with a string which created from a string array
+        /// </summary>
         public string TitleText { get { return FrozenUtils.GetArrayInString(Titles); } }
         public string SeatText { get { return FrozenUtils.GetArrayInString(Seats); } }
         public string AncestralWeaponsText { get { return FrozenUtils.GetArrayInString(AncestralWeapons); } }

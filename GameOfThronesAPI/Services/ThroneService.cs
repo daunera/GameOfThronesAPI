@@ -64,19 +64,31 @@ namespace GameOfThronesAPI.Services
             }
         }
 
-        //Gets houses list with matching parameter on generic method
+        /// <summary>
+        /// Gets houses list with matching parameter on generic method
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public async Task<Object[]> GetHousesAsync(String url)
         {
             return await GetPagedAsync<List<House>>(new Uri(url));
         }
 
-        //Gets books list with matching parameter on generic method
+        /// <summary>
+        /// Gets books list with matching parameter on generic method
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public async Task<Object[]> GetBooksAsync(String url)
         {
             return await GetPagedAsync<List<Book>>(new Uri(url));
         }
 
-        //Gets characters list with matching parameter on generic method
+        /// <summary>
+        /// Gets characters list with matching parameter on generic method
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public async Task<Object[]> GetCharactersAsync(String url)
         {
             return await GetPagedAsync<List<Character>>(new Uri(url));
@@ -97,6 +109,7 @@ namespace GameOfThronesAPI.Services
                 }
                 catch (HttpRequestException)
                 {
+                    //Give a dialog about no internet
                     ContentDialog noConnectionDialog = new ContentDialog
                     {
                         Title = "No internet connection",
@@ -105,12 +118,18 @@ namespace GameOfThronesAPI.Services
                     };
 
                     ContentDialogResult result = await noConnectionDialog.ShowAsync();
+
+                    //From in this code section we can't redirect, so we throw another exception to the page to redirect
                     throw new RedirectMainException();
                 }
             }
         }
 
-        //Gets a detailed house with matching parameter on generic method
+        /// <summary>
+        /// Gets a detailed house with matching parameter on generic method
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public async Task<House> GetHouseAsync(String url)
         {
             if (url.Equals(""))
@@ -118,7 +137,11 @@ namespace GameOfThronesAPI.Services
             return await GetSimpleAsync<House>(new Uri(url));
         }
 
-        //Gets a detailed character with matching parameter on generic method
+        /// <summary>
+        /// Gets a detailed character with matching parameter on generic method
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public async Task<Character> GetCharacterAsync(String url)
         {
             if (url.Equals(""))
@@ -126,7 +149,11 @@ namespace GameOfThronesAPI.Services
             return await GetSimpleAsync<Character>(new Uri(url));
         }
 
-        //Gets a detailed book with matching parameter on generic method
+        /// <summary>
+        /// Gets a detailed book with matching parameter on generic method
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public async Task<Book> GetBookAsync(String url)
         {
             if (url.Equals(""))
@@ -138,6 +165,7 @@ namespace GameOfThronesAPI.Services
         {
             String[] texts = text.Split(new[] { ", " }, StringSplitOptions.None);
             Linker linker = new Linker();
+            //Set the specific link property based on the url's ending
             foreach(string s in texts)
             {
                 String[] tmp = s.Split(new[] { "; " }, StringSplitOptions.None);
@@ -151,6 +179,8 @@ namespace GameOfThronesAPI.Services
                     linker.Last = tmp[0].Substring(1, tmp[0].Length - 2);
             }
 
+            // if first page and the last page is the same, there is only one page, so
+            // we cannot step, because of it, we set these urls to null too, like next and prev
             if (linker.First.Equals(linker.Last))
             {
                 linker.First = null;

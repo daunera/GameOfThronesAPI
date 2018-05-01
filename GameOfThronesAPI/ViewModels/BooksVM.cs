@@ -20,6 +20,13 @@ namespace GameOfThronesAPI.ViewModels
         public List<String> FromDateList { get; set; } = new List<string>();
         public List<String> ToDateList { get; set; } = new List<string>();
 
+        /// <summary>
+        /// When navigated to this page, set the combobox lists, request the books list
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="mode"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             FromDateList.Add("Whatever");
@@ -30,22 +37,36 @@ namespace GameOfThronesAPI.ViewModels
                 ToDateList.Add(year.ToString());
             }
 
+            //When we navigate from hamburger menu, we have to decode some extra char
             String link = ((String)parameter).Replace("%3D", "=").Replace("%26", "&");
             SetBooksList(link);
             await base.OnNavigatedToAsync(parameter, mode, state);
         }
 
+        /// <summary>
+        /// Navigate to a book detailed page
+        /// </summary>
+        /// <param name="bookURL">book's url</param>
         public void NavigateToBookDetails(String bookURL)
         {
             NavigationService.Navigate(typeof(BookDetailsPage), bookURL);
         }
 
+        /// <summary>
+        /// Refresh the books list
+        /// </summary>
+        /// <param name="parameter"></param>
         public void LoadPage(String parameter)
         {
             Books.Clear();
             SetBooksList(parameter);
         }
 
+        /// <summary>
+        /// Set the filtered url address based on paramters, with some error handling
+        /// </summary>
+        /// <param name="fromDate"></param>
+        /// <param name="toDate"></param>
         public void LoadFilteredPage(string fromDate, string toDate)
         {
             String baseUrl = "https://www.anapioficeandfire.com/api/books?";
@@ -67,6 +88,11 @@ namespace GameOfThronesAPI.ViewModels
             LoadPage(baseUrl + "pageSize=50");
         }
 
+        /// <summary>
+        /// Request the url predicted books list, then add to the list property, 
+        /// if no internet connection redirect to mainpage
+        /// </summary>
+        /// <param name="url"></param>
         private async void SetBooksList(String url)
         {
             try

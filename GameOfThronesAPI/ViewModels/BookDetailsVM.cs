@@ -26,6 +26,13 @@ namespace GameOfThronesAPI.ViewModels
         public ObservableCollection<Character> PovCharacters { get; set; } = new ObservableCollection<Character>();
         public ObservableCollection<Character> Characters { get; set; } = new ObservableCollection<Character>();
 
+        /// <summary>
+        /// When navigated to the page, gets the book details via api request, and then some url-base data requested too
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="mode"></param>
+        /// <param name="state"></param>
+        /// <returns></returns>
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             try
@@ -62,6 +69,10 @@ namespace GameOfThronesAPI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Navigate to another character page
+        /// </summary>
+        /// <param name="bookURL">the character's url id</param>
         public void NavigateToCharacterDetails(String bookURL)
         {
             NavigationService.Navigate(typeof(CharacterDetailsPage), bookURL);
