@@ -57,5 +57,20 @@ namespace GameOfThronesAPI.Views
             else
                 CharactersViewModel.LoadPage(CharactersViewModel.Buttons.First);
         }
+
+        private void Filter_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        }
+
+        private void Filter_Click(object sender, RoutedEventArgs e)
+        {
+            Grid parentGrid = (Grid)((Button)sender).Parent;
+            int genderState = ((ComboBox)parentGrid.FindName("GenderCombo")).SelectedIndex;
+            int aliveState = ((ComboBox)parentGrid.FindName("AliveCombo")).SelectedIndex;
+
+            CharactersViewModel.LoadFilteredPage(genderState, aliveState);
+
+        }
     }
 }

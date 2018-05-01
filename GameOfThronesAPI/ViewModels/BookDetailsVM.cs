@@ -1,4 +1,5 @@
-﻿using GameOfThronesAPI.Models;
+﻿using GameOfThronesAPI.Exceptions;
+using GameOfThronesAPI.Models;
 using GameOfThronesAPI.Services;
 using GameOfThronesAPI.Views;
 using System;
@@ -27,31 +28,38 @@ namespace GameOfThronesAPI.ViewModels
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            var bookUrl = (string)parameter;
-            var service = new ThroneService();
-            Book = await service.GetBookAsync(bookUrl);
-
-            if(Book.PovCharacters.Length != 0)
+            try
             {
-                PovCharacters.Clear();
-                foreach (String url in Book.PovCharacters)
-                {
-                    Character newCharacter = await service.GetCharacterAsync(url);
-                    PovCharacters.Add(newCharacter);
-                }
-            }
+                var bookUrl = (string)parameter;
+                var service = new ThroneService();
+                Book = await service.GetBookAsync(bookUrl);
 
-            if (Book.Characters.Length != 0)
+                if (Book.PovCharacters.Length != 0)
+                {
+                    PovCharacters.Clear();
+                    foreach (String url in Book.PovCharacters)
+                    {
+                        Character newCharacter = await service.GetCharacterAsync(url);
+                        PovCharacters.Add(newCharacter);
+                    }
+                }
+
+                if (Book.Characters.Length != 0)
+                {
+                    Characters.Clear();
+                    foreach (String url in Book.Characters)
+                    {
+                        Character newCharacter = await service.GetCharacterAsync(url);
+                        Characters.Add(newCharacter);
+                    }
+                }
+
+                await base.OnNavigatedToAsync(parameter, mode, state);
+            }
+            catch (RedirectMainException)
             {
-                Characters.Clear();
-                foreach (String url in Book.Characters)
-                {
-                    Character newCharacter = await service.GetCharacterAsync(url);
-                    Characters.Add(newCharacter);
-                }
+                NavigationService.Navigate(typeof(MainPage));
             }
-
-            await base.OnNavigatedToAsync(parameter, mode, state);
         }
 
         public void NavigateToCharacterDetails(String bookURL)

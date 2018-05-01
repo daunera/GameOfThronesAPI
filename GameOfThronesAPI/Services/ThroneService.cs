@@ -37,7 +37,7 @@ namespace GameOfThronesAPI.Services
                     App.ApiCalls++;
                     return array;
                 }
-                catch (HttpRequestException e)
+                catch (HttpRequestException)
                 {
                     ContentDialog noConnectionDialog = new ContentDialog
                     {
@@ -49,7 +49,7 @@ namespace GameOfThronesAPI.Services
                     ContentDialogResult result = await noConnectionDialog.ShowAsync();
                     throw new RedirectMainException();
                 }
-                catch (EmptyJsonException e)
+                catch (EmptyJsonException)
                 {
                     ContentDialog noItemDialog = new ContentDialog
                     {
@@ -64,21 +64,23 @@ namespace GameOfThronesAPI.Services
             }
         }
 
+        //Gets houses list with matching parameter on generic method
         public async Task<Object[]> GetHousesAsync(String url)
         {
             return await GetPagedAsync<List<House>>(new Uri(url));
         }
 
+        //Gets books list with matching parameter on generic method
         public async Task<Object[]> GetBooksAsync(String url)
         {
             return await GetPagedAsync<List<Book>>(new Uri(url));
         }
 
+        //Gets characters list with matching parameter on generic method
         public async Task<Object[]> GetCharactersAsync(String url)
         {
             return await GetPagedAsync<List<Character>>(new Uri(url));
         }
-
 
         private async Task<T> GetSimpleAsync<T>(Uri uri)
         {
@@ -93,7 +95,7 @@ namespace GameOfThronesAPI.Services
                     App.ApiCalls++;
                     return result;
                 }
-                catch (HttpRequestException e)
+                catch (HttpRequestException)
                 {
                     ContentDialog noConnectionDialog = new ContentDialog
                     {
@@ -108,6 +110,7 @@ namespace GameOfThronesAPI.Services
             }
         }
 
+        //Gets a detailed house with matching parameter on generic method
         public async Task<House> GetHouseAsync(String url)
         {
             if (url.Equals(""))
@@ -115,6 +118,7 @@ namespace GameOfThronesAPI.Services
             return await GetSimpleAsync<House>(new Uri(url));
         }
 
+        //Gets a detailed character with matching parameter on generic method
         public async Task<Character> GetCharacterAsync(String url)
         {
             if (url.Equals(""))
@@ -122,6 +126,7 @@ namespace GameOfThronesAPI.Services
             return await GetSimpleAsync<Character>(new Uri(url));
         }
 
+        //Gets a detailed book with matching parameter on generic method
         public async Task<Book> GetBookAsync(String url)
         {
             if (url.Equals(""))

@@ -29,5 +29,19 @@ namespace GameOfThronesAPI.Views
             var book = (Book)e.ClickedItem;
             BooksViewModel.NavigateToBookDetails(book.Url);
         }
+
+        private void Filter_Click(object sender, RoutedEventArgs e)
+        {
+            Grid parentGrid = (Grid)((Button)sender).Parent;
+            object fromDate = ((ComboBox)parentGrid.FindName("FromDateCombo")).SelectionBoxItem;
+            object toDate = ((ComboBox)parentGrid.FindName("ToDateCombo")).SelectionBoxItem;
+
+            BooksViewModel.LoadFilteredPage((string)fromDate, (string)toDate);
+        }
+
+        private void Filter_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+        }
     }
 }

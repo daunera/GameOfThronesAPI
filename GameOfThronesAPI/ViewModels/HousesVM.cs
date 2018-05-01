@@ -101,7 +101,7 @@ namespace GameOfThronesAPI.ViewModels
                     break;
             }
 
-            LoadPage(baseUrl);
+            LoadPage(baseUrl + "pageSize=50");
         }
 
         private async void SetHousesList(String url)
@@ -121,7 +121,7 @@ namespace GameOfThronesAPI.ViewModels
 
                 Buttons = (Linker)obj[1];
             }
-            catch (RedirectMainException e)
+            catch (RedirectMainException)
             {
                 NavigationService.Navigate(typeof(MainPage));
             }

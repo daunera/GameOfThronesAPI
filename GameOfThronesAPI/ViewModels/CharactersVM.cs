@@ -1,4 +1,5 @@
-﻿using GameOfThronesAPI.Models;
+﻿using GameOfThronesAPI.Exceptions;
+using GameOfThronesAPI.Models;
 using GameOfThronesAPI.Services;
 using GameOfThronesAPI.Views;
 using System;
@@ -21,16 +22,7 @@ namespace GameOfThronesAPI.ViewModels
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             String link = ((String)parameter).Replace("%3D", "=").Replace("%26", "&");
-            var service = new ThroneService();
-            var obj = await service.GetCharactersAsync(link);
-            List<Character> characters = (List<Character>)obj[0];
-            foreach (Character item in characters)
-            {
-                Characters.Add(item);
-            }
-
-            Buttons = (Linker)obj[1];
-
+            SetCharactersList(link);
             await base.OnNavigatedToAsync(parameter, mode, state);
         }
 
@@ -39,18 +31,65 @@ namespace GameOfThronesAPI.ViewModels
             NavigationService.Navigate(typeof(CharacterDetailsPage), characterURL);
         }
 
-        public async void LoadPage(String parameter)
+        public void LoadPage(String parameter)
         {
-            var service = new ThroneService();
-            var obj = await service.GetCharactersAsync((String)parameter);
-            List<Character> characters = (List<Character>)obj[0];
             Characters.Clear();
-            foreach (Character item in characters)
+            SetCharactersList(parameter);
+        }
+
+        public void LoadFilteredPage(int gender, int alive)
+        {
+            String baseUrl = "https://www.anapioficeandfire.com/api/characters?";
+
+            switch (gender)
             {
-                Characters.Add(item);
+                case 0:
+                    baseUrl += "gender=male&";
+                    break;
+                case 2:
+                    baseUrl += "gender=female&";
+                    break;
+                default:
+                    break;
             }
 
-            Buttons = (Linker)obj[1];
+            switch (alive)
+            {
+                case 0:
+                    baseUrl += "isAlive=true&";
+                    break;
+                case 2:
+                    baseUrl += "isAlive=false&";
+                    break;
+                default:
+                    break;
+            }
+
+            LoadPage(baseUrl + "pageSize=50");
+        }
+
+        private async void SetCharactersList(String url)
+        {
+            try
+            {
+                var service = new ThroneService();
+                var obj = await service.GetCharactersAsync(url);
+                if (obj[0] != null)
+                {
+                    List<Character> characters = (List<Character>)obj[0];
+                    foreach (Character item in characters)
+                    {
+                        Characters.Add(item);
+                    }
+                }
+
+                Buttons = (Linker)obj[1];
+            }
+            catch(RedirectMainException)
+            {
+                NavigationService.Navigate(typeof(MainPage));
+            }
         }
     }
+
 }

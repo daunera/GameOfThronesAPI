@@ -1,4 +1,5 @@
-﻿using GameOfThronesAPI.Models;
+﻿using GameOfThronesAPI.Exceptions;
+using GameOfThronesAPI.Models;
 using GameOfThronesAPI.Services;
 using GameOfThronesAPI.Views;
 using System;
@@ -49,44 +50,51 @@ namespace GameOfThronesAPI.ViewModels
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
-            var characterUrl = (string)parameter;
-            var service = new ThroneService();
-            Character = await service.GetCharacterAsync(characterUrl);
-            Father = await service.GetCharacterAsync(Character.Father);
-            Mother = await service.GetCharacterAsync(Character.Mother);
-            Spouse = await service.GetCharacterAsync(Character.Spouse);
-
-            if (Character.Allegiances.Length != 0)
+            try
             {
-                Allies.Clear();
-                foreach (String url in Character.Allegiances)
-                {
-                    House newHouse = await service.GetHouseAsync(url);
-                    Allies.Add(newHouse);
-                }
-            }
+                var characterUrl = (string)parameter;
+                var service = new ThroneService();
+                Character = await service.GetCharacterAsync(characterUrl);
+                Father = await service.GetCharacterAsync(Character.Father);
+                Mother = await service.GetCharacterAsync(Character.Mother);
+                Spouse = await service.GetCharacterAsync(Character.Spouse);
 
-            if (Character.Books.Length != 0)
+                if (Character.Allegiances.Length != 0)
+                {
+                    Allies.Clear();
+                    foreach (String url in Character.Allegiances)
+                    {
+                        House newHouse = await service.GetHouseAsync(url);
+                        Allies.Add(newHouse);
+                    }
+                }
+
+                if (Character.Books.Length != 0)
+                {
+                    Books.Clear();
+                    foreach (String url in Character.Books)
+                    {
+                        Book newBook = await service.GetBookAsync(url);
+                        Books.Add(newBook);
+                    }
+                }
+
+                if (Character.PovBooks.Length != 0)
+                {
+                    PovBooks.Clear();
+                    foreach (String url in Character.PovBooks)
+                    {
+                        Book newBook = await service.GetBookAsync(url);
+                        PovBooks.Add(newBook);
+                    }
+                }
+
+                await base.OnNavigatedToAsync(parameter, mode, state);
+            }
+            catch (RedirectMainException)
             {
-                Books.Clear();
-                foreach (String url in Character.Books)
-                {
-                    Book newBook = await service.GetBookAsync(url);
-                    Books.Add(newBook);
-                }
+                NavigationService.Navigate(typeof(MainPage));
             }
-
-            if (Character.PovBooks.Length != 0)
-            {
-                PovBooks.Clear();
-                foreach (String url in Character.PovBooks)
-                {
-                    Book newBook = await service.GetBookAsync(url);
-                    PovBooks.Add(newBook);
-                }
-            }
-
-            await base.OnNavigatedToAsync(parameter, mode, state);
         }
 
         public void NavigateToHouseDetails(String houseURL)

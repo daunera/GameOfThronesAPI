@@ -92,7 +92,7 @@ namespace GameOfThronesAPI.ViewModels
 
                 await base.OnNavigatedToAsync(parameter, mode, state);
             }
-            catch(RedirectMainException e)
+            catch(RedirectMainException)
             {
                 NavigationService.Navigate(typeof(MainPage));
             }

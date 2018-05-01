@@ -39,6 +39,47 @@
                 <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="16" Glyph="&#xE893;"/>
             </Button>
 
+            <Button x:Name="Filter" Tapped="Filter_Tapped"  Margin="15,0,0,0">
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem>
+                            <MenuFlyoutItem.Template >
+                                <ControlTemplate TargetType="MenuFlyoutItem">
+                                    <Grid Margin="5,0,5,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Gender:" VerticalAlignment="Center" Margin="0,0,5,5"/>
+                                        <ComboBox x:Name="GenderCombo" Grid.Row="0" Grid.Column="1" Width="110" Margin="0,0,0,5">
+                                            <ComboBoxItem Content="Male"/>
+                                            <ComboBoxItem Content="Whatever" IsSelected="True"/>
+                                            <ComboBoxItem Content="Female"/>
+                                        </ComboBox>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Alive:" VerticalAlignment="Center" Margin="0,0,5,5"/>
+                                        <ComboBox x:Name="AliveCombo"  Grid.Row="1" Grid.Column="1" Width="110" Margin="0,0,0,5">
+                                            <ComboBoxItem Content="Yes"/>
+                                            <ComboBoxItem Content="Whatever" IsSelected="True"/>
+                                            <ComboBoxItem Content="No"/>
+                                        </ComboBox>
+
+                                        <Button Grid.Row="2" Grid.ColumnSpan="2" Click="Filter_Click" HorizontalAlignment="Stretch" Content="Filter it"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </MenuFlyoutItem.Template>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+                <FontIcon FontFamily="Segoe MDL2 Assets" FontSize="16" Glyph="&#xE011;"/>
+            </Button>
+
         </StackPanel>
 
         <ListView x:Name="charactersListView" Grid.Row="1"
