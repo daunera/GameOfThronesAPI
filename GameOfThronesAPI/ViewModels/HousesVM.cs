@@ -138,17 +138,17 @@ namespace GameOfThronesAPI.ViewModels
             try
             {
                 var service = new ThroneService();
-                var obj = await service.GetHousesAsync(url);
-                if (obj[0] != null)
+                PagedResponse<List<House>> obj = await service.GetHousesAsync(url);
+                if (obj.result != null)
                 {
-                    List<House> houses = (List<House>)obj[0];
+                    List<House> houses = obj.result;
                     foreach (House item in houses)
                     {
                         Houses.Add(item);
                     }
                 }
 
-                Buttons = (Linker)obj[1];
+                Buttons = obj.links;
             }
             catch (RedirectMainException)
             {

@@ -98,17 +98,17 @@ namespace GameOfThronesAPI.ViewModels
             try
             {
                 var service = new ThroneService();
-                var obj = await service.GetCharactersAsync(url);
-                if (obj[0] != null)
+                PagedResponse<List<Character>> obj = await service.GetCharactersAsync(url);
+                if (obj.result != null)
                 {
-                    List<Character> characters = (List<Character>)obj[0];
+                    List<Character> characters = obj.result;
                     foreach (Character item in characters)
                     {
                         Characters.Add(item);
                     }
                 }
 
-                Buttons = (Linker)obj[1];
+                Buttons = obj.links;
             }
             catch(RedirectMainException)
             {

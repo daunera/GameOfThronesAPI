@@ -98,10 +98,10 @@ namespace GameOfThronesAPI.ViewModels
             try
             {
                 var service = new ThroneService();
-                var obj = await service.GetBooksAsync(url);
-                if (obj[0] != null)
+                PagedResponse<List<Book>> obj = await service.GetBooksAsync(url);
+                if (obj.result != null)
                 {
-                    List<Book> books = (List<Book>)obj[0];
+                    List<Book> books = obj.result;
                     foreach (Book item in books)
                     {
                         Books.Add(item);

@@ -17,25 +17,26 @@ namespace GameOfThronesAPI.Services
 {
     class ThroneService 
     {
-        private async Task<Object[]> GetPagedAsync<T>(Uri uri)
+        private async Task<PagedResponse<T>> GetPagedAsync<T>(Uri uri)
         {
             using (var client = new HttpClient())
             {
                 try
                 {
+                    PagedResponse<T> resultObject = new PagedResponse<T>();
+
                     var response = await client.GetAsync(uri);
-                    Linker links = LinksTransform(((String[])response.Headers.GetValues("link"))[0]);
+                    resultObject.links = LinksTransform(((String[])response.Headers.GetValues("link"))[0]);
                     var json = await response.Content.ReadAsStringAsync();
-                    T result = JsonConvert.DeserializeObject<T>(json);
+                    resultObject.result = JsonConvert.DeserializeObject<T>(json);
 
                     if (((string)json).Equals("[]"))
                     {
                         throw new EmptyJsonException();
                     }
 
-                    Object[] array = new Object[] { result, links };
                     App.ApiCalls++;
-                    return array;
+                    return resultObject;
                 }
                 catch (HttpRequestException)
                 {
@@ -59,7 +60,7 @@ namespace GameOfThronesAPI.Services
                     };
 
                     ContentDialogResult result = await noItemDialog.ShowAsync();
-                    return new Object[] { null, new Linker() };
+                    return new PagedResponse<T>();
                 }
             }
         }
@@ -69,7 +70,7 @@ namespace GameOfThronesAPI.Services
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public async Task<Object[]> GetHousesAsync(String url)
+        public async Task<PagedResponse<List<House>>> GetHousesAsync(String url)
         {
             return await GetPagedAsync<List<House>>(new Uri(url));
         }
@@ -79,7 +80,7 @@ namespace GameOfThronesAPI.Services
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public async Task<Object[]> GetBooksAsync(String url)
+        public async Task<PagedResponse<List<Book>>> GetBooksAsync(String url)
         {
             return await GetPagedAsync<List<Book>>(new Uri(url));
         }
@@ -89,7 +90,7 @@ namespace GameOfThronesAPI.Services
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public async Task<Object[]> GetCharactersAsync(String url)
+        public async Task<PagedResponse<List<Character>>> GetCharactersAsync(String url)
         {
             return await GetPagedAsync<List<Character>>(new Uri(url));
         }
